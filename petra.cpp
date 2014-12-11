@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cstddef>
-//#include <osmium/io/any_input.hpp>
+//#include <cstddef>
 #include <osmium/io/xml_input.hpp>
 #include <osmium/handler.hpp>
 #include <osmium/visitor.hpp>
