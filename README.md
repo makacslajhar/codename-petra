@@ -8,8 +8,12 @@ This project's purpose is to assist the "Makacs Lajhár Programozó divízió" c
 ==============
 
 Feladat leírása:
-Írj C++ programot, amely bemenetként egy OSM térképet és két a térképen lévő GPS koordináta párt kap, majd
-kimenetként kinyomtat egy utat a megadott koordináta párokhoz legközelebb eső két csomópont között.
+    Írj C++ programot, amely bemenetként egy OSM térképet és két a térképen lévő GPS koordináta párt kap, majd
+    kimenetként kinyomtat egy utat a megadott koordináta párokhoz legközelebb eső két csomópont között.
+
+Telepítés:
+    A futtatás előtt kérjük futtassa le az install.sh állományt.
+    
 
 =======
 ### g++ petra.cpp -o petra -std=c++11 -lexpat
