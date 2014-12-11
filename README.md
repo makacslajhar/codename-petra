@@ -11,4 +11,6 @@ Feladat leírása:
 Írj C++ programot, amely bemenetként egy OSM térképet és két a térképen lévő GPS koordináta párt kap, majd
 kimenetként kinyomtat egy utat a megadott koordináta párokhoz legközelebb eső két csomópont között.
 
+=======
+### g++ petra.cpp -o petra -std=c++11 -lexpat
 
