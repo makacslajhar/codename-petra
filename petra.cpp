@@ -1,5 +1,7 @@
 #include <iostream>
-#include <osmium/io/any_input.hpp>
+#include <cstddef>
+//#include <osmium/io/any_input.hpp>
+#include <osmium/io/xml_input.hpp>
 #include <osmium/handler.hpp>
 #include <osmium/visitor.hpp>
 #include <osmium/osm/node.hpp>
@@ -10,8 +12,10 @@
 
 //Na ebből kéne kiindulni :D
 
+
+
 int main()
 {
-    std::cout<<"Hello World";
+    std::cout<<"Hello World\n";
     return 0;
 }
