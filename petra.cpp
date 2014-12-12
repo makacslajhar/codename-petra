@@ -21,13 +21,21 @@ array<osmium::Node> nodeok;
 
 array<osmium::Node> connections(osmium::Node v_node)
 {
+    array<osmium::Node> res;
     for(ut:utak)
     {
-        for(t:utak.tags())
+        bool benne_van=false;
+        for(n:ut.nodes())
         {
-            if
+            if (n==v_node) benne_van=true;
         }
+        if (benne_van)
+            for(n:ut.nodes())
+            {
+                res.add(n);
+            }
     }
+    return res;
 }
 
 
