@@ -10,18 +10,31 @@
 #include <osmium/handler/node_locations_for_ways.hpp>
 
 //Na ebből kéne kiindulni :D
+
 array<osmium::Node> szurke;
 array<osmium::Node> feher;
+
+/*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) beolvasni - Erik*/
 array<osmium::Way> utak;
+array<osmium::Node> nodeok;
 
-void init_dijk()
+
+array<osmium::Node> connections(osmium::Node v_node)
 {
-    szurke.add(new osmium::Location::Location())
-
+    for(ut:utak)
+    {
+        for(t:utak.tags())
+        {
+            if
+        }
+    }
 }
 
-array<osmium::Node> dijkstra(osmium::Node Starting,osmium::Node Ending){
+
+
+array<osmium::Way> dijkstra(osmium::Node Starting,osmium::Node Ending){
     feher.add(Starting)
+
     while (true){
         for(n:szurke)
         {
