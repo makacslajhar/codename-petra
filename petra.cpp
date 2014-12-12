@@ -10,7 +10,26 @@
 #include <osmium/handler/node_locations_for_ways.hpp>
 
 //Na ebből kéne kiindulni :D
+array<osmium::Node> szurke;
+array<osmium::Node> feher;
+array<osmium::Way> utak;
 
+void init_dijk()
+{
+    szurke.add(new osmium::Location::Location())
+
+}
+
+array<osmium::Node> dijkstra(osmium::Node Starting,osmium::Node Ending){
+    feher.add(Starting)
+    while (true){
+        for(n:szurke)
+        {
+
+        }
+    }
+
+}
 
 
 int main()
