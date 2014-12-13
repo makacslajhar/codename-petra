@@ -33,14 +33,6 @@ osmium::memory::Buffer feher;
 //osmium::memory::Buffer utak;
 osmium::memory::Buffer nodeok;
 
-
-osmium::memory::Buffer route(osmium::Node * Starting,osmium::Node * Ending)
-{
-
-
-}
-
-
 void usage()
 {
     std::cout<<"usage: ./petra lat1 lon1 lat2 lon2"<<std::endl;
