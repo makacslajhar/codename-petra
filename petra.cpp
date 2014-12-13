@@ -17,10 +17,6 @@
 #include <osmium/index/map/stl_map.hpp>
 #include <osmium/handler/node_locations_for_ways.hpp>
 
-typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
-boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
-typedef NodeRefGraph::vertex_descriptor NRGVertex;
-typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, NRGVertex* > NRGVertices;
 
 
 /*
@@ -32,6 +28,19 @@ osmium::memory::Buffer feher;
 
 //osmium::memory::Buffer utak;
 osmium::memory::Buffer nodeok;
+osmium::memory::Buffer utvonal;
+
+void route(){
+typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
+boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
+typedef NodeRefGraph::vertex_descriptor NRGVertex;
+typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, NRGVertex* > NRGVertices;
+typedef std::pair<osmium::unsigned_object_id_type, osmium::unsigned_object_id_type> Edge;
+
+boost::dijkstra_shortest_paths(g)
+
+}
+
 
 void usage()
 {
