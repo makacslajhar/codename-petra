@@ -1,4 +1,4 @@
-#include <vector>
+#include <osmium/memory/buffer.hpp>
 #include <iostream>
 //#include <cstddef>
 #include <osmium/io/xml_input.hpp>
@@ -18,23 +18,26 @@ typedef struct
     osmium::Node csp;
     osmium::Node * forras;
 }RNODE;
-
-std::vector<osmium::Node> szurke;
-std::vector<osmium::Node> feher;
 */
+
+osmium::memory::Buffer szurke;
+osmium::memory::Buffer feher;
+
 
 /*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) beolvasni - Erik*/
 
-std::vector<osmium::Way> utak;
-std::vector<osmium::Node> nodeok;
+osmium::memory::Buffer utak;
+osmium::memory::Buffer nodeok;
 
 
-std::vector<osmium::Way> route(osmium::Node Starting,osmium::Node Ending){
-    feher.push_back(Starting);
+osmium::memory::Buffer route(osmium::Node * Starting,osmium::Node * Ending){
+    nodeok.reserve_space(sizeof(osmium::Node));
+    nodeok.add_item(*Starting);
+    nodeok.commit();
     osmium::Node * cur;
     while (true){
 
-        for(osmium::Node n:feher)
+        //for()
         {
 
         }
