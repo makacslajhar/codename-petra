@@ -2,7 +2,7 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
-
+#include <boost/graph/depth_first_search.hpp>
 
 #include <osmium/memory/buffer.hpp>
 #include <iostream>
@@ -37,6 +37,8 @@ osmium::memory::Buffer nodeok;
 osmium::memory::Buffer utvonal;
 int node_num;
 
+
+
 std::vector<Edge> parok()
 {
     std::vector<Edge> par_lista;
@@ -55,9 +57,26 @@ std::vector<Edge> parok()
     return par_lista;
 }
 
+std::vector<int> sulyok(int s)
+{
+    std::vector<int> res;
+    for(int i=0;i<s;i++)
+        res.push_back(1);
+    return res;
+}
+
 void route(){
+
+using namespace boost;
+
 std::vector<Edge> tmp=parok();
-Edge * Edge_array=&tmp[0];
+int edge_number=tmp.size();
+Edge * Edge_array = &tmp[0];
+int * weights = &sulyok(edge_number)[0];
+
+graph g(Edge_array,Edge_array+edge_number,weights,node_num);
+property_map<graph,edge_weight_t>::type weightmap=get(edge_weight,g);
+
 //boost::dijkstra_shortest_paths(g)
 
 }
