@@ -16,7 +16,10 @@
 #include <osmium/index/map/sparse_table.hpp>
 #include <osmium/index/map/stl_map.hpp>
 #include <osmium/handler/node_locations_for_ways.hpp>
-
+#include <osmium/memory/item.hpp>
+#include <osmium/memory/item_iterator.hpp>
+#include <vector>
+//dijkstra-hoz szükséges adattipusok
 typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
 boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
 typedef NodeRefGraph::vertex_descriptor NRGVertex;
@@ -29,15 +32,33 @@ typedef std::pair<osmium::unsigned_object_id_type, osmium::unsigned_object_id_ty
 
 /*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) és a node-ok számát beolvasni - Erik*/
 
-//osmium::memory::Buffer utak;
+osmium::memory::Buffer utak;
 osmium::memory::Buffer nodeok;
 osmium::memory::Buffer utvonal;
 int node_num;
 
+std::vector<Edge> parok()
+{
+    std::vector<Edge> par_lista;
+    for(int i=0;i<utak.capacity();i++)
+    {
+        osmium::WayNodeList * utnodeok;
+        utnodeok=&utak.get<osmium::Way>(i).nodes();
+        for(int j=0;j<(*utnodeok).size()-1;j++)
+        {
+            Edge par;
+            par.first=((*utnodeok)[j]).ref();
+            par.second=((*utnodeok)[j+1]).ref();
+            par_lista.push_back(par);
+        }
+    }
+    return par_lista;
+}
+
 void route(){
-
-
-boost::dijkstra_shortest_paths(g)
+std::vector<Edge> tmp=parok();
+Edge * Edge_array=&tmp[0];
+//boost::dijkstra_shortest_paths(g)
 
 }
 
