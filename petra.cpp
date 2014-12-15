@@ -4,10 +4,15 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/depth_first_search.hpp>
 
+
 #include <osmium/memory/buffer.hpp>
 #include <iostream>
 //#include <cstddef>
 #include <osmium/io/xml_input.hpp>
+#include <osmium/io/pbf_input.hpp>
+#include <osmium/io/pbf_output.hpp>
+#include <osmium/io/opl_output.hpp>
+#include <osmium/io/xml_output.hpp>
 #include <osmium/handler.hpp>
 #include <osmium/visitor.hpp>
 #include <osmium/osm/node.hpp>
@@ -26,9 +31,12 @@ typedef NodeRefGraph::vertex_descriptor NRGVertex;
 typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, NRGVertex* > NRGVertices;
 typedef std::pair<osmium::unsigned_object_id_type, osmium::unsigned_object_id_type> Edge;
 
+void beolvas(){
 
+osmium::io::File input_file();
+input_file.format(osmium::io::file_format_pbf);
 
-
+}
 
 /*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) és a node-ok számát beolvasni - Erik*/
 
