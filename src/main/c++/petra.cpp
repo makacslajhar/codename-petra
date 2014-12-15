@@ -74,8 +74,8 @@ int edge_number=tmp.size();
 Edge * Edge_array = &tmp[0];
 int * weights = &sulyok(edge_number)[0];
 
-graph g(Edge_array,Edge_array+edge_number,weights,node_num);
-property_map<graph,edge_weight_t>::type weightmap=get(edge_weight,g);
+NodeRefGraph g(Edge_array,Edge_array+edge_number,weights,node_num);
+property_map<NodeRefGraph,vertex_name_t>::type weightmap = get(vertex_name_t,g);
 
 //boost::dijkstra_shortest_paths(g)
 
