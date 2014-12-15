@@ -1,0 +1,13 @@
+#Nemtudom mit csinálok, de remélem nem bukok bele, mert annak nagyon nem fogok örülni :D
+CC=g++
+
+CFLAGS=-c -Wall
+
+all: petra
+
+petra:
+	$(CC) petra.cpp -o hello -std=c++11 -lexpat
+
+clean:
+	rm -rf *o petra
+
