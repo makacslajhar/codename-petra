@@ -1,0 +1,21 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Makacs.Lajhar.Programozo.Divizio</groupId>
+  <artifactId>Petra</artifactId>
+  <version>1</version>
+
+  <packaging>o</packaging>
+
+   <build>   
+     <plugins>
+       <plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>native-maven-plugin</artifactId>
+         <extensions>true</extensions>
+         <configuration>
+            
+         </configuration>
+       </plugin>
+     </plugins>
+   </build>
+</project>
