@@ -6,7 +6,8 @@
 
 #include <osmium/memory/buffer.hpp>
 #include <iostream>
-#include <osmium/io/any_input.hpp>
+#include <osmium/osm.hpp>
+#include <osmium/io/xml_input.hpp>
 #include <osmium/handler.hpp>
 #include <osmium/visitor.hpp>
 #include <osmium/osm/node.hpp>
@@ -18,6 +19,7 @@
 #include <osmium/memory/item.hpp>
 #include <osmium/memory/item_iterator.hpp>
 #include <vector>
+#include <cmath>
 //dijkstra-hoz szükséges adattipusok
 typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
 boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
@@ -41,7 +43,7 @@ std::vector<Edge> parok()
     {
         osmium::WayNodeList * utnodeok;
         utnodeok=&utak.get<osmium::Way>(i).nodes();
-        for(int j=0;j<(*utnodeok).size()-1;j++)
+        for(unsigned int j=0;j<(*utnodeok).size()-1;j++)
         {
             Edge par;
             par.first=((*utnodeok)[j]).ref();
@@ -52,30 +54,58 @@ std::vector<Edge> parok()
     return par_lista;
 }
 
-std::vector<int> sulyok(int s)
+int tav(osmium::NodeRef a,osmium::NodeRef b)
+{
+    return sqrt(std::pow(a.x()-b.x(),2)+std::pow(a.y()-b.y(),2));
+
+}
+
+double tav(double lat1,double lon1,double lat2,double lon2)
+{
+    return sqrt(std::pow(lon1-lon2,2)+std::pow(lat1-lat2,2));
+
+}
+
+std::vector<int> sulyok(int s,Edge * v)
 {
     std::vector<int> res;
     for(int i=0;i<s;i++)
-        res.push_back(1);
+        res.push_back(tav(v[i].first,v[i].second));
     return res;
 }
 
-void route(){
+void route(osmium::NodeRef start,osmium::NodeRef veg){
 
 using namespace boost;
 
 std::vector<Edge> tmp=parok();
 int edge_number=tmp.size();
 Edge * Edge_array = &tmp[0];
-int * weights = &sulyok(edge_number)[0];
+int * weights = &sulyok(edge_number,Edge_array)[0];
 
-NodeRefGraph g(Edge_array,Edge_array+edge_number,weights,node_num);
+Graph g();
 //property_map<NodeRefGraph,vertex_name_t>::type weightmap = get(vertex_name_t,g);
 
 //boost::dijkstra_shortest_paths(g)
 
 }
 
+osmium::NodeRef nearest_node(double lat,double lon)
+{
+    osmium::NodeRef near_node=(nodeok.get<osmium::Node>(0)).id();
+    double tavolsag=tav(lat,lon,near_node.lat(),near_node.lon());
+    for(int i=1;i<nodeok.capacity();i++)
+    {
+        osmium::NodeRef vizsgalt_node=(nodeok.get<osmium::Node>(i)).id();
+        if (tav(lat,lon,vizsgalt_node.lat(),vizsgalt_node.lon()<tavolsag))
+        {
+            tavolsag=tav(lat,lon,vizsgalt_node.lat(),vizsgalt_node.lon());
+            near_node=vizsgalt_node;
+        }
+    }
+    return near_node;
+
+}
 
 void usage()
 {
@@ -93,5 +123,9 @@ int main(int argc,const char * argv[])
         std::cout<<"nem megfelelo szamu koordinata!"<<std::endl;
         usage();
     }
+    osmium::NodeRef start=nearest_node(atof(argv[1]),atof(argv[2]));
+    osmium::NodeRef vege=nearest_node(atof(argv[3]),atof(argv[4]));
+    route(start,vege);
+
     return 0;
 }
