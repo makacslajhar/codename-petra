@@ -82,13 +82,17 @@ using namespace boost;
 
 std::vector<Edge> tmp=parok();
 int edge_number=tmp.size();
-Edge * Edge_array = &tmp[0];
+Edge * Edge_array = &(tmp)[0];
 int * weights = &sulyok(edge_number,Edge_array)[0];
 
-NodeRefGraph g(Edge_array,Edge_array+edge_number,weights,node_num);
+NodeRefGraph g/*(Edge_array,Edge_array+edge_number,weights,node_num)*/;
 //property_map<NodeRefGraph,vertex_name_t>::type weightmap = get(vertex_name_t,g);
 
-//boost::dijkstra_shortest_paths(g)
+std::vector<NRGVertex> p(num_vertices(g));
+std::vector<int> d(num_vertices(g));
+NRGVertex s = vertex(start,g);
+
+dijkstra_shortest_paths(g, s, predecessor_map(&p[0]).distance_map(&d[0]));
 
 }
 
