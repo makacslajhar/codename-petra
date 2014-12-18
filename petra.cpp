@@ -3,6 +3,8 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/depth_first_search.hpp>
+#include <boost/graph/iteration_macros.hpp>
+#include <boost/graph/properties.hpp>
 
 #include <osmium/memory/buffer.hpp>
 #include <iostream>
@@ -25,7 +27,7 @@ typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
 boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
 typedef NodeRefGraph::vertex_descriptor NRGVertex;
 typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, NRGVertex* > NRGVertices;
-typedef std::pair<osmium::unsigned_object_id_type, osmium::unsigned_object_id_type> Edge;
+typedef std::pair<const osmium::NodeRef,const osmium::NodeRef> Edge;
 
 /*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) és a node-ok számát beolvasni - Erik*/
 
@@ -45,9 +47,9 @@ std::vector<Edge> parok()
         utnodeok=&utak.get<osmium::Way>(i).nodes();
         for(unsigned int j=0;j<(*utnodeok).size()-1;j++)
         {
-            Edge par;
-            par.first=((*utnodeok)[j]).ref();
-            par.second=((*utnodeok)[j+1]).ref();
+            Edge par(((*utnodeok)[j]),((*utnodeok)[j+1]));
+            /*par.first=((*utnodeok)[j]).ref();
+            par.second=((*utnodeok)[j+1]).ref();*/
             par_lista.push_back(par);
         }
     }
@@ -83,7 +85,7 @@ int edge_number=tmp.size();
 Edge * Edge_array = &tmp[0];
 int * weights = &sulyok(edge_number,Edge_array)[0];
 
-Graph g();
+NodeRefGraph g(Edge_array,Edge_array+edge_number,weights,node_num);
 //property_map<NodeRefGraph,vertex_name_t>::type weightmap = get(vertex_name_t,g);
 
 //boost::dijkstra_shortest_paths(g)
