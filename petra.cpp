@@ -23,8 +23,9 @@
 #include <vector>
 #include <cmath>
 //dijkstra-hoz szükséges adattipusok
+typedef boost::property<osmium::NodeRef> NameProperty;
 typedef boost::adjacency_list<boost::vecS, boost::setS, boost::directedS,
-boost::property <boost::vertex_name_t, osmium::unsigned_object_id_type >> NodeRefGraph;
+NameProperty> NodeRefGraph;
 typedef NodeRefGraph::vertex_descriptor NRGVertex;
 typedef osmium::index::map::StlMap<osmium::unsigned_object_id_type, NRGVertex* > NRGVertices;
 typedef std::pair<const osmium::NodeRef,const osmium::NodeRef> Edge;
@@ -32,8 +33,8 @@ typedef std::pair<const osmium::NodeRef,const osmium::NodeRef> Edge;
 /*Laci ezekbe kérem majd az utakat(<way></way>) illetve node-okat(<node></node>) és a node-ok számát beolvasni - Erik*/
 
 osmium::memory::Buffer utak;
-osmium::memory::Buffer nodeok;
-osmium::memory::Buffer utvonal;
+std::vector<osmium::NodeRef> nodeok;
+std::vector<osmium::NodeRef> utvonal;
 int node_num;
 
 
@@ -87,22 +88,28 @@ int * weights = &sulyok(edge_number,Edge_array)[0];
 
 NodeRefGraph g/*(Edge_array,Edge_array+edge_number,weights,node_num)*/;
 //property_map<NodeRefGraph,vertex_name_t>::type weightmap = get(vertex_name_t,g);
+for (int i=0;i<edge_number;i++)
+    {
+
+        add_edge(Edge_array[i].first,Edge_array[i].second,NameProperty(Edge_array[i].first,Edge_array[i].second),g);
+    }
+
 
 std::vector<NRGVertex> p(num_vertices(g));
 std::vector<int> d(num_vertices(g));
-NRGVertex s = vertex(start,g);
+NRGVertex s = vertex(,g);
 
-dijkstra_shortest_paths(g, s, predecessor_map(&p[0]).distance_map(&d[0]));
+//dijkstra_shortest_paths(g, s, predecessor_map(&p[0]).distance_map(&d[0]));
 
 }
 
 osmium::NodeRef nearest_node(double lat,double lon)
 {
-    osmium::NodeRef near_node=(nodeok.get<osmium::Node>(0)).id();
+    osmium::NodeRef near_node=(nodeok[0]);
     double tavolsag=tav(lat,lon,near_node.lat(),near_node.lon());
     for(int i=1;i<nodeok.capacity();i++)
     {
-        osmium::NodeRef vizsgalt_node=(nodeok.get<osmium::Node>(i)).id();
+        osmium::NodeRef vizsgalt_node=(nodeok[i]);
         if (tav(lat,lon,vizsgalt_node.lat(),vizsgalt_node.lon()<tavolsag))
         {
             tavolsag=tav(lat,lon,vizsgalt_node.lat(),vizsgalt_node.lon());
